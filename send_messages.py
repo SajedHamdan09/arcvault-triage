@@ -37,25 +37,25 @@ def send_all():
     results = []
 
     for msg in messages:
-        print(f"📨 Sending Message #{msg['id']} ({msg['source']})...")
+        print(f" Sending Message #{msg['id']} ({msg['source']})...")
         try:
             response = httpx.post(WEBHOOK_URL, json=msg, timeout=60)
             result = response.json()
             results.append(result)
-            print(f"  ✅ Category: {result['category']}")
-            print(f"  ✅ Priority: {result['priority']}")
-            print(f"  ✅ Queue: {result['destination_queue']}")
-            print(f"  ✅ Escalated: {'YES 🚨' if result['escalation_flag'] else 'No'}")
+            print(f"  Category: {result['category']}")
+            print(f"  Priority: {result['priority']}")
+            print(f"  Queue: {result['destination_queue']}")
+            print(f"  Escalated: {'YES ' if result['escalation_flag'] else 'No'}")
             print()
             time.sleep(1)  # Small delay between messages
         except Exception as e:
-            print(f"  ❌ Error: {e}\n")
+            print(f"  Error: {e}\n")
 
     print("="*60)
-    print(f"✅ All {len(results)} messages processed successfully.")
+    print(f" All {len(results)} messages processed successfully.")
     escalated = [r for r in results if r['escalation_flag']]
     if escalated:
-        print(f"🚨 {len(escalated)} message(s) escalated:")
+        print(f" {len(escalated)} message(s) escalated:")
         for r in escalated:
             print(f"   - Message #{r['id']}: {r['escalation_reason']}")
 

@@ -1,5 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from pydantic import BaseModel
+from contextlib import asynccontextmanager
 from classifier import classify_message
 from enricher import enrich_message
 from router import route_message
@@ -13,31 +14,33 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = FastAPI(
-    title="ArcVault Triage API",
-    description="AI-powered intake and triage pipeline for inbound customer messages.",
-    version="1.0.0"
-)
-
-# Initialize Google Sheet once on startup
 worksheet = None
 
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     global worksheet
-    print("\n🚀 ArcVault Triage Webhook Server Starting...")
+    print("\nArcVault Triage Webhook Server Starting...")
     try:
         worksheet = get_sheet()
         setup_sheet_headers(worksheet)
-        print("✅ Google Sheets connected.")
+        print(" Google Sheets connected.")
     except Exception as e:
-        print(f"⚠️  Google Sheets unavailable: {e}")
+        print(f" Google Sheets unavailable: {e}")
         worksheet = None
+    yield
+
+
+app = FastAPI(
+    title="ArcVault Triage API",
+    description="AI-powered intake and triage pipeline for inbound customer messages.",
+    version="1.0.0",
+    lifespan=lifespan
+)
 
 
 class InboundMessage(BaseModel):
     id: int
-    source: str  # "Email", "Web Form", "Support Portal"
+    source: str
     raw_message: str
 
 
@@ -70,7 +73,10 @@ def root():
 
 @app.get("/health")
 def health():
-    return {"status": "healthy", "timestamp": datetime.utcnow().isoformat() + "Z"}
+    return {
+        "status": "healthy",
+        "timestamp": datetime.utcnow().isoformat() + "Z"
+    }
 
 
 @app.post("/triage", response_model=TriageResult)
@@ -80,35 +86,36 @@ async def triage_message(message: InboundMessage):
     Automatically classifies, enriches, routes, escalates, and saves the result.
     """
     print(f"\n{'='*60}")
-    print(f"📨 New message received | ID: {message.id} | Source: {message.source}")
+    print(f" New message received | ID: {message.id} | Source: {message.source}")
     print(f"Message: {message.raw_message[:80]}...")
     print(f"{'='*60}")
 
     raw = message.raw_message
 
-    # STEP 2 — Classification
+    # Classification
     print("[Step 2] Classifying...")
     classification = classify_message(raw)
     print(f"  → Category: {classification['category']}")
     print(f"  → Priority: {classification['priority']}")
     print(f"  → Confidence: {classification['confidence_score']:.0%}")
 
-    # STEP 3 — Enrichment
+    # Enrichment
     print("[Step 3] Enriching...")
     enrichment = enrich_message(raw)
     print(f"  → Core Issue: {enrichment['core_issue']}")
     print(f"  → Identifiers: {enrichment['identifiers']}")
     print(f"  → Urgency: {enrichment['urgency_signal']}")
 
-    # STEP 4 — Routing
+    # Routing
     print("[Step 4] Routing...")
     routing = route_message(
         category=classification["category"],
         confidence_score=classification["confidence_score"]
     )
     print(f"  → Destination: {routing['destination_queue']}")
+    print(f"  → Reason: {routing['routing_reason']}")
 
-    # STEP 6 — Escalation
+    # Escalation
     print("[Step 6] Checking escalation...")
     escalation = check_escalation(
         raw_message=raw,
@@ -116,7 +123,7 @@ async def triage_message(message: InboundMessage):
         category=classification["category"]
     )
     if escalation["escalation_flag"]:
-        print(f"  → 🚨 ESCALATED: {escalation['escalation_reason']}")
+        print(f"  →  ESCALATED: {escalation['escalation_reason']}")
         final_queue = escalation["destination_queue"]
     else:
         print(f"  → No escalation needed")
@@ -139,14 +146,14 @@ async def triage_message(message: InboundMessage):
         "processed_at": datetime.utcnow().isoformat() + "Z"
     }
 
-    # STEP 5 — Summary + Output
+    # Summary + Output
     print("[Step 5] Generating summary and saving...")
     summary = generate_summary(combined_data)
     combined_data["summary"] = summary
     print(f"  → Summary: {summary[:100]}...")
 
     save_record(combined_data, worksheet=worksheet)
-    print(f"✅ Message #{message.id} fully processed.\n")
+    print(f" Message #{message.id} fully processed.\n")
 
     return TriageResult(**combined_data)
 

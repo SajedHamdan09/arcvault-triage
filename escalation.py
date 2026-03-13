@@ -20,18 +20,18 @@ def check_escalation(raw_message: str, confidence_score: float, category: str) -
     """
     reasons = []
 
-    # Rule 1: Low confidence
+    # Low confidence
     if confidence_score < CONFIDENCE_ESCALATION_THRESHOLD:
         reasons.append(f"Confidence score {confidence_score:.0%} is below threshold")
 
-    # Rule 2: Escalation keywords in message
+    # Escalation keywords in message
     message_lower = raw_message.lower()
     for keyword in ESCALATION_KEYWORDS:
         if keyword in message_lower:
             reasons.append(f"Escalation keyword detected: '{keyword}'")
             break
 
-    # Rule 3: Billing discrepancy over $500
+    # Billing discrepancy over $500
     if category == "Billing Issue":
         import re
         amounts = re.findall(r'\$(\d+(?:,\d{3})*(?:\.\d{2})?)', raw_message)

@@ -54,7 +54,6 @@ def setup_sheet_headers(worksheet):
     worksheet.clear()
     worksheet.append_row(SHEET_HEADERS)
 
-    # Format header row - make it bold by updating the first row
     worksheet.format("A1:N1", {
         "textFormat": {"bold": True},
         "backgroundColor": {

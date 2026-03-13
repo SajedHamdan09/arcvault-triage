@@ -1,4 +1,4 @@
-# Routing rules — maps category to destination queue
+# maps category to destination queue
 ROUTING_TABLE = {
     "Bug Report":         "Engineering",
     "Feature Request":    "Product",
