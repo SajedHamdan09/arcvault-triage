@@ -161,6 +161,6 @@ assessment specification rather than accepted as-is from AI suggestions.
 | Structured output (Sheets) | [Google Sheets link](https://docs.google.com/spreadsheets/d/1c5i1MLkNqxcsIj7Jla71nymdMdE8UyI_84PDdg1F5wQ/edit?usp=sharing) |
 | Prompt documentation       | `PROMPTS.md`                                                                                                               |
 | Architecture write-up      | `ARCHITECTURE.md` / `ARCHITECTURE.docx`                                                                                    |
-| Demo recording             | [Loom link](YOUR_LOOM_LINK_HERE)                                                                                           |
+| Demo recording             | [Loom link](https://www.loom.com/share/d1d6872c638541088ef3a6243243df80)                                                                                           |
 
 
