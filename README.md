@@ -36,9 +36,9 @@ All five sample inputs processed correctly. Output visible here:
 |---|----------|----------|------------|-------|-----------|
 | 1 | Bug Report | High | 92% | Engineering | No |
 | 2 | Feature Request | Medium | 80% | Product | No |
-| 3 | Billing Issue | High | 92% | Billing | YES 🚨 |
+| 3 | Billing Issue | High | 92% | Billing | YES |
 | 4 | Technical Question | Low | 80% | IT/Security | No |
-| 5 | Incident/Outage | High | 95% | Engineering | YES 🚨 |
+| 5 | Incident/Outage | High | 95% | Engineering | YES |
 
 Messages #3 and #5 correctly triggered escalation:
 - **#3** — Billing amount $1,240 exceeds the $500 escalation threshold

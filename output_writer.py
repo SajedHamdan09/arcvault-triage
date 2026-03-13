@@ -81,7 +81,7 @@ def record_to_sheet_row(record: dict) -> list:
         ", ".join(record.get("identifiers", [])) or "None",
         record.get("urgency_signal", ""),
         record.get("destination_queue", ""),
-        "YES 🚨" if record.get("escalation_flag") else "No",
+        "YES" if record.get("escalation_flag") else "No",
         record.get("escalation_reason") or "—",
         record.get("summary", ""),
         record.get("processed_at", "")
