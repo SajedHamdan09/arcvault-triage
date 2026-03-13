@@ -18,7 +18,7 @@ human-readable record — automatically.
 
 | Step | Module | Description |
 |------|--------|-------------|
-| 1 | `main.py` | Ingests raw messages from `sample_inputs.json` |
+| 1 | `webhook_server.py` | FastAPI webhook receives POST requests, triggers pipeline automatically |
 | 2 | `classifier.py` | LLM classifies category, priority, confidence score |
 | 3 | `enricher.py` | LLM extracts core issue, identifiers, urgency signal |
 | 4 | `router.py` | Deterministic routing table maps category to queue |
@@ -51,6 +51,7 @@ Messages #3 and #5 correctly triggered escalation:
 | Component | Tool | Reason |
 |-----------|------|--------|
 | Language | Python 3.12 | Backend role — code ownership over visual builders |
+| API Framework | FastAPI | Real webhook server for event-driven ingestion |
 | LLM | Groq / Llama 3.3 70B | Free tier, sub-second latency, strong structured output |
 | Output | Google Sheets + JSON | Visual for reviewers, file for submission |
 | Editor | Cursor | AI-augmented development workflow |
@@ -98,7 +99,6 @@ pip install -r requirements.txt
 ```
 
 **4. Set up environment variables**
-
 Create a `.env` file in the project root:
 ```
 GROQ_API_KEY=your_groq_api_key_here
@@ -106,14 +106,21 @@ GOOGLE_SHEET_ID=your_google_sheet_id_here
 ```
 
 **5. Add Google credentials**
+Place your `google_credentials.json` service account file
+in the project root.
 
-Place your `google_credentials.json` service account file in the
-project root. See the Architecture write-up for setup details.
-
-**6. Run the pipeline**
+**6. Start the webhook server (Terminal 1)**
 ```bash
-python main.py
+python webhook_server.py
 ```
+Server runs on http://localhost:8000
+
+**7. Send all 5 messages (Terminal 2)**
+```bash
+python send_messages.py
+```
+This simulates inbound traffic from Email, Web Form,
+and Support Portal channels.
 
 ---
 
