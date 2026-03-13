@@ -1,1 +1,89 @@
-[]
+[
+  {
+    "id": 1,
+    "source": "Email",
+    "raw_message": "Hi, I tried logging in this morning and keep getting a 403 error. My account is arcvault.io/user/jsmith. This started after your update last Tuesday.",
+    "category": "Bug Report",
+    "priority": "High",
+    "confidence_score": 0.92,
+    "core_issue": "User is experiencing a 403 error when trying to log in after the platform update.",
+    "identifiers": [
+      "arcvault.io/user/jsmith",
+      "403"
+    ],
+    "urgency_signal": "High",
+    "destination_queue": "Engineering",
+    "escalation_flag": false,
+    "escalation_reason": null,
+    "processed_at": "2026-03-13T12:50:10.996041Z",
+    "summary": "The customer with account arcvault.io/user/jsmith is experiencing a high-priority issue with a 403 error when attempting to log in, which began after the platform update last Tuesday. To resolve this bug, the Engineering team needs to investigate and address the root cause of the 403 error for this specific user account as soon as possible. Immediate action is required to restore access and prevent further disruption to the customer's workflow."
+  },
+  {
+    "id": 2,
+    "source": "Web Form",
+    "raw_message": "We'd love to see a bulk export feature for our audit logs. We're a compliance-heavy org and this would save us hours every month.",
+    "category": "Feature Request",
+    "priority": "Medium",
+    "confidence_score": 0.8,
+    "core_issue": "Customer is requesting a bulk export feature for audit logs to improve compliance efficiency.",
+    "identifiers": [],
+    "urgency_signal": "Normal",
+    "destination_queue": "Product",
+    "escalation_flag": false,
+    "escalation_reason": null,
+    "processed_at": "2026-03-13T12:50:21.223880Z",
+    "summary": "The customer is requesting a bulk export feature for audit logs to improve compliance efficiency, which would save them hours of work every month. This feature request has been categorized as a medium priority issue with normal urgency. The Product team should review and consider implementing this feature to enhance the customer's experience and support their compliance needs."
+  },
+  {
+    "id": 3,
+    "source": "Support Portal",
+    "raw_message": "Invoice #8821 shows a charge of $1,240 but our contract rate is $980/month. Can someone look into this?",
+    "category": "Billing Issue",
+    "priority": "High",
+    "confidence_score": 0.92,
+    "core_issue": "There is a discrepancy between the contract rate and the charge on invoice #8821.",
+    "identifiers": [
+      "#8821"
+    ],
+    "urgency_signal": "High",
+    "destination_queue": "Escalation",
+    "escalation_flag": true,
+    "escalation_reason": "Billing amount $1,240 exceeds escalation threshold",
+    "processed_at": "2026-03-13T12:50:27.155348Z",
+    "summary": "The customer is reporting a billing discrepancy with invoice #8821, which shows a charge of $1,240, exceeding their contract rate of $980/month. To resolve this high-priority issue, the Escalation team needs to investigate the discrepancy and take corrective action to ensure the customer is charged the correct amount. The customer is awaiting a prompt resolution, and the invoice #8821 should be reviewed immediately to address the issue."
+  },
+  {
+    "id": 4,
+    "source": "Email",
+    "raw_message": "I'm not sure if this is the right place to ask, but is there a way to set up SSO with Okta? We're evaluating switching our auth provider.",
+    "category": "Technical Question",
+    "priority": "Low",
+    "confidence_score": 0.8,
+    "core_issue": "Customer is inquiring about setting up SSO with Okta for their auth provider.",
+    "identifiers": [
+      "Okta"
+    ],
+    "urgency_signal": "Normal",
+    "destination_queue": "IT/Security",
+    "escalation_flag": false,
+    "escalation_reason": null,
+    "processed_at": "2026-03-13T12:50:33.116637Z",
+    "summary": "The customer is inquiring about setting up Single Sign-On (SSO) with Okta as their authentication provider, and is currently evaluating a potential switch. To address this low-priority technical question, the IT/Security team should review the feasibility of Okta SSO integration with ArcVault. The team's response should include guidance on the necessary steps to set up Okta SSO, if supported, to help the customer with their auth provider evaluation."
+  },
+  {
+    "id": 5,
+    "source": "Web Form",
+    "raw_message": "Your dashboard stopped loading for us around 2pm EST. Checked our end \u2014 it's definitely on yours. Multiple users affected.",
+    "category": "Incident/Outage",
+    "priority": "High",
+    "confidence_score": 0.95,
+    "core_issue": "The dashboard stopped loading for multiple users around 2pm EST.",
+    "identifiers": [],
+    "urgency_signal": "Critical",
+    "destination_queue": "Escalation",
+    "escalation_flag": true,
+    "escalation_reason": "Escalation keyword detected: 'multiple users affected'",
+    "processed_at": "2026-03-13T12:50:38.993028Z",
+    "summary": "A high-priority incident has been reported where the dashboard stopped loading for multiple users around 2pm EST, and the customer has confirmed the issue is not on their end. The core issue is the dashboard failure, affecting an unspecified number of users, with no specific identifiers provided. The Escalation team needs to investigate and resolve this critical outage immediately to restore dashboard functionality for the affected users."
+  }
+]
