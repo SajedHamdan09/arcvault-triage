@@ -33,7 +33,7 @@ messages = [
 ]
 
 def send_all():
-    print("\n🚀 Sending all 5 messages to ArcVault Triage Webhook...\n")
+    print("\n Sending all 5 messages to ArcVault Triage Webhook...\n")
     results = []
 
     for msg in messages:

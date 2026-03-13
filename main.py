@@ -84,7 +84,7 @@ def process_message(message: dict, worksheet=None) -> dict:
 
 
 def main():
-    print("\n🚀 ArcVault Triage Pipeline Starting...")
+    print("\n ArcVault Triage Pipeline Starting...")
     print("Loading sample inputs...")
 
     inputs = load_inputs("sample_inputs.json")
